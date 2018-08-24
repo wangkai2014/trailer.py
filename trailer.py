@@ -103,9 +103,9 @@ else:
 	bsong=mp3list[0]
 print("Selected background song : "+bsong)
 
-print("ffmpeg -i "+bsong+" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge,pan=stereo:c0<c0+c2:c1<c1+c3[out]\" -map 1:v -map \"[out]\" -c:v copy -shortest outputtrailer.mp4")
+print("ffmpeg -i \""+bsong+"\" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge,pan=stereo:c0<c0+c2:c1<c1+c3[out]\" -map 1:v -map \"[out]\" -c:v copy -shortest outputtrailer.mp4")
 
-p = subprocess.Popen("ffmpeg -i "+bsong+" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge,pan=stereo|c0<c0+c2|c1<c1+c3[out]\" -map 1:v -map \"[out]\" -c:v copy -shortest outputtrailerwf.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+p = subprocess.Popen("ffmpeg -i \""+bsong+"\" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge,pan=stereo|c0<c0+c2|c1<c1+c3[out]\" -map 1:v -map \"[out]\" -c:v copy -shortest outputtrailerwf.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 for line in p.stdout.readlines():
 	print(line),
 retval = p.wait()
