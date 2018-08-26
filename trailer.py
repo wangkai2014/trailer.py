@@ -6,6 +6,8 @@ import datetime
 import time
 import os.path
 from os import path
+import shlex
+import json
 
 vlist=[]
 vlistedit=[]
@@ -28,13 +30,7 @@ for i in vlist:
 	print(vlistedit)
 	list1 ="-i "
 	vlist2 = vlist2+list1+str(vcount)+".mp4 "
-	"""
-	#get video duration
-	vl=""
-    ffprobe=subprocess.check_output("ffprobe -i "+i+" -show_entries format=duration -v quiet -of csv=\"p=0\"")
-    vl += str(ffprobe[0:2])
-    vduration=(vl[2:4])
-	"""
+	
 	randomstart=(random.choice([1,2]))
 	randomlen=(random.choice([2,3,4]))
 	print("ffmpeg -i \""+i+"\" -ss 00:00:0"+str(randomstart)+" -t 00:00:0"+str(randomlen)+" -async 1 "+str(vcount)+".mp4")
@@ -102,19 +98,18 @@ else:
 	bsong=mp3list[0]
 print("Selected background song : "+bsong)
 
-print("ffmpeg -i \""+bsong+"\" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge,pan=stereo:c0<c0+c2:c1<c1+c3[out]\" -map 1:v -map \"[out]\" -c:v copy -shortest outputtrailer.mp4")
+print("ffmpeg -i \""+bsong+"\" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge,pan=stereo:c0<c0+c2:c1<c1+c3[out]\" -map 1:v -map \"[out]\" -c:v copy -shortest outputtrailerwf.mp4")
 
 p = subprocess.Popen("ffmpeg -i \""+bsong+"\" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge,pan=stereo|c0<c0+c2|c1<c1+c3[out]\" -map 1:v -map \"[out]\" -c:v copy -shortest outputtrailerwf.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 for line in p.stdout.readlines():
 	print(line),
-
 
 #video filter
 vfilter=""
 vfilter = input("Apply video filter(y/n) ? : ")
 if vfilter=="y" :
 
-	print("ffmpeg -vf eq=brightness=0.01:contrast=0.9:saturation=1.5 1.mp4")
+	print("ffmpeg -i outputtrailerwf -vf eq=brightness=0.01:contrast=0.9:saturation=1.5 outputtrailer.mp4")
 
 	p = subprocess.Popen("ffmpeg -i outputtrailerwf.mp4 -vf eq=brightness=0.01:contrast=0.9:saturation=1.5 outputtrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	for line in p.stdout.readlines():
@@ -126,33 +121,55 @@ else:
 # Delete tmp files
 vcount=0
 for i in vlist:
-	vcount=vcount+1;
+	vcount=vcount+1
 	os.remove(str(vcount)+".mp4")
 	print(str(vcount)+".mp4 deleted")
 os.remove("concatenate.mp4")
 os.remove("trailer.mp4")
 os.remove("outputtrailerwf.mp4")
 
+#audio in-out fade
 
-#get video resolution
-vh=""
-ffprobe=""
-ffprobe=subprocess.check_output("ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 outputtrailer.mp4")
-vh += str(ffprobe)
-print("Video resolution :"+vh[2:6])
-print("Note: You need to have "+vh[2:6]+".png file in your current directory")
+#get video duration/resolution 
+cmd = "ffprobe -v quiet -print_format json -show_streams"
+args = shlex.split(cmd)
+args.append("outputtrailer.mp4")
+    # run the ffprobe process, decode stdout into utf-8 & convert to JSON
+ffprobeOutput = subprocess.check_output(args).decode('utf-8')
+ffprobeOutput = json.loads(ffprobeOutput)
+
+# prints all the metadata available:
+
+import pprint
+pp = pprint.PrettyPrinter(indent=2)
+#pp.pprint(ffprobeOutput)
+
+h = ffprobeOutput['streams'][0]['height']
+w = ffprobeOutput['streams'][0]['width']
+fduration = ffprobeOutput['streams'][0]['duration']
+vduration = (int(float(fduration))-3)
+
 # Movie black bar
 vfilter=""
 vfilter = input("Get Movie black bar(y/n) ? : ")
 if vfilter=="y" :
-	p = subprocess.Popen("ffmpeg -i outputtrailer.mp4 -i "+vh[2:6]+".png -filter_complex \"[0:v][1:v] overlay=0:0:enable='between(t,0,60)'\" -pix_fmt yuv420p -c:a copy Movietrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+	print("ffmpeg -i input.png -vf scale="+str(w)+":"+str(h)+" output.png")
+	p = subprocess.Popen("ffmpeg -i input.png -vf scale="+str(w)+":"+str(h)+" output.png", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	for line in p.stdout.readlines():
 		print(line),
-	
-	print("Output file Movietrailer.mp4")
+	p = subprocess.Popen("ffmpeg -i outputtrailer.mp4 -i output.png -filter_complex \"[0:v][1:v] overlay=0:0:enable='between(t,0,"+str(vduration+3)+")'\" -pix_fmt yuv420p -c:a copy outputtrailerblackbar.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+	for line in p.stdout.readlines():
+		print(line),
 
+print("ffmpeg -i outputtrailerblackbar.mp4 -af \"afade=t=in:ss=0:d=2,afade=t=out:st="+str(vduration)+":d=3\" Movietrailer.mp4")
+p = subprocess.Popen("ffmpeg -i outputtrailerblackbar.mp4 -af \"afade=t=in:ss=0:d=2,afade=t=out:st=\""+str(vduration)+"\":d=3\" Movietrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+for line in p.stdout.readlines():
+	print(line),
 
 #output
-print("Output file outputtrailer.mp4")
+os.remove("outputtrailer.mp4")
+os.remove("outputtrailerblackbar.mp4")
+os.remove("output.png")
+print("Output file Movietrailer.mp4")
 print("Completed")
 input("Press any key to exit")
