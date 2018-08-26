@@ -41,7 +41,7 @@ for i in vlist:
 	p = subprocess.Popen("ffmpeg -i \""+i+"\" -ss 00:00:0"+str(randomstart)+" -t 00:00:0"+str(randomlen)+" -async 1 "+str(vcount)+".mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	for line in p.stdout.readlines():
 		print(line),
-	retval = p.wait()
+	
 
 #slomotion random
 slowmo = input("Slowmotion trailer(y/n) ? : ")
@@ -54,10 +54,9 @@ if slowmo=="y" :
 		p = subprocess.Popen("ffmpeg -i "+j+" -filter_complex \"[0:v]setpts=2*PTS[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" slow."+j+"", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		for line in p.stdout.readlines():
 			print(line),
-		retval = p.wait()
-
 		os.remove(j)
 		os.rename("slow."+j,j)
+
 
 #concatenate all video
 
@@ -73,7 +72,7 @@ print("ffmpeg "+vlist2+"-filter_complex \""+cmdva+" concat=n="+str(vcount)+":v=1
 p = subprocess.Popen("ffmpeg "+vlist2+"-filter_complex \""+cmdva+" concat=n="+str(vcount)+":v=1:a=1 [v] [a]\" -map \"[v]\" -map \"[a]\" concatenate.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 for line in p.stdout.readlines():
 	print(line),
-retval = p.wait()
+
 
 #check outputtrailer.mp4 exists
 
@@ -88,7 +87,7 @@ print("ffmpeg -i concatenate.mp4 -vcodec copy -af \"volume=-12dB\" trailer.mp4")
 p = subprocess.Popen("ffmpeg -i concatenate.mp4 -vcodec copy -af \"volume=-12dB\" trailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 for line in p.stdout.readlines():
 	print(line),
-retval = p.wait()
+
 
 #add background song
 
@@ -108,7 +107,7 @@ print("ffmpeg -i \""+bsong+"\" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge
 p = subprocess.Popen("ffmpeg -i \""+bsong+"\" -i trailer.mp4 -filter_complex \"[0:a][1:a]amerge,pan=stereo|c0<c0+c2|c1<c1+c3[out]\" -map 1:v -map \"[out]\" -c:v copy -shortest outputtrailerwf.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 for line in p.stdout.readlines():
 	print(line),
-retval = p.wait()
+
 
 #video filter
 vfilter=""
@@ -120,7 +119,7 @@ if vfilter=="y" :
 	p = subprocess.Popen("ffmpeg -i outputtrailerwf.mp4 -vf eq=brightness=0.01:contrast=0.9:saturation=1.5 outputtrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	for line in p.stdout.readlines():
 		print(line),
-	retval = p.wait()
+	
 else:
 	os.rename("outputtrailerwf.mp4","outputtrailer.mp4")
 
@@ -149,10 +148,11 @@ if vfilter=="y" :
 	p = subprocess.Popen("ffmpeg -i outputtrailer.mp4 -i "+vh[2:6]+".png -filter_complex \"[0:v][1:v] overlay=0:0:enable='between(t,0,60)'\" -pix_fmt yuv420p -c:a copy Movietrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	for line in p.stdout.readlines():
 		print(line),
-	retval = p.wait()
+	
 	print("Output file Movietrailer.mp4")
 
 
 #output
 print("Output file outputtrailer.mp4")
 print("Completed")
+input("Press any key to exit")
