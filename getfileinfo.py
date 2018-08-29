@@ -27,4 +27,4 @@ class getfileinfo:
         self.h = ffprobeOutput['streams'][0]['height']
         self.w = ffprobeOutput['streams'][0]['width']
         fduration = ffprobeOutput['streams'][0]['duration']
-        self.vduration = (int(float(fduration))-3)
+        self.vduration = int(float(fduration))
