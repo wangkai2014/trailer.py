@@ -16,6 +16,7 @@ from audio import audio
 from movieeffect import movieeffect
 from deletefiles import deletefiles
 from videofix import videofix
+from img2mp4 import img2mp4
 
 vlist=[]
 vlistedit=[]
@@ -25,6 +26,14 @@ randomlen=0
 randomstart=0
 vduration=""
 slow=""
+
+cwd = os.getcwd()
+os.system("cd "+cwd)
+print("working direcory :"+cwd)
+
+#img to mp4 converter
+img2mp4=img2mp4()
+img2mp4.getimg2mp4()
 
 #get list of videos
 vlist=files().getfiles()
@@ -58,7 +67,7 @@ movieeffect.blackbar()
 
 # Delete tmp files
 deletefiles=deletefiles()
-deletefiles.getdeletefiles(vlist)
+deletefiles.getdeletefiles(vlist,img2mp4.imglist)
 
 #output
 print("Output file Movietrailer.mp4")
