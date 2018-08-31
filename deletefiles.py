@@ -15,6 +15,5 @@ class deletefiles:
         os.remove("fade.mp4")
         os.remove("filter.mp4")
         os.remove("output.png")
-        print("Delete all .mp4.tmp files")
-        list(map(os.remove , glob.glob('*.mp4.tmp')))
+        print("Delete all *.mp4 files")
         print("Deleted tmp files...")

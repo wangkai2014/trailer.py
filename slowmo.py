@@ -10,7 +10,7 @@ class slowmo:
         slowmo = input("Slowmotion trailer(y/n) ? : ")
         if slowmo=="y" :
     	    for j in subclip.vlistedit:
-                print("random slow."+j)
+                print("Working on."+j)
                 print("ffmpeg -i "+j+" -filter_complex \"[0:v]setpts=2*PTS[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" slow."+j+"")
 
                 p = subprocess.Popen("ffmpeg -i "+j+" -filter_complex \"[0:v]setpts=2*PTS[v];[0:a]atempo=0.5[a]\" -map \"[v]\" -map \"[a]\" slow."+j+"", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

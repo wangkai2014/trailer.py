@@ -15,6 +15,7 @@ from concatenate import concatenate
 from audio import audio
 from movieeffect import movieeffect
 from deletefiles import deletefiles
+from videofix import videofix
 
 vlist=[]
 vlistedit=[]
@@ -31,6 +32,10 @@ vlist=files().getfiles()
 #select subclip
 subclip=subclip()
 subclip.getsubclip(vlist)
+
+#check size/audio
+videofix=videofix()
+videofix.videofix(subclip.vlistedit)
 
 #slomotion random
 slowmo=slowmo()
@@ -50,8 +55,6 @@ audio.fade()
 movieeffect=movieeffect()
 movieeffect.filter()
 movieeffect.blackbar()
-
-
 
 # Delete tmp files
 deletefiles=deletefiles()

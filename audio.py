@@ -8,8 +8,8 @@ from getfileinfo import getfileinfo
 class audio:
     getfileinfo=getfileinfo()
     def audiogain(self):
-        #audio gain -12db
-        print("ffmpeg -i concatenate.mp4 -vcodec copy -af \"volume=-12dB\" audiogain.mp4")
+        #audio gain -15db
+        print("ffmpeg -i concatenate.mp4 -vcodec copy -af \"volume=-15dB\" audiogain.mp4")
 
         p = subprocess.Popen("ffmpeg -i concatenate.mp4 -vcodec copy -af \"volume=-12dB\" audiogain.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         for line in p.stdout.readlines():
@@ -38,6 +38,6 @@ class audio:
     def fade(self):
         self.getfileinfo.getvideoinfo("addaudio.mp4")
         print("ffmpeg -i addaudio.mp4 -af \"afade=t=in:ss=0:d=2,afade=t=out:st="+str(self.getfileinfo.vduration)+":d=3\" fade.mp4")
-        p = subprocess.Popen("ffmpeg -i addaudio.mp4 -af \"afade=t=in:ss=0:d=2,afade=t=out:st=\""+str(self.getfileinfo.vduration)+"\":d=3\" fade.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        p = subprocess.Popen("ffmpeg -i addaudio.mp4 -af \"afade=t=in:ss=0:d=2,afade=t=out:st=\""+str(self.getfileinfo.vduration-3)+"\":d=3\" fade.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         for line in p.stdout.readlines():
             print(line),
