@@ -17,6 +17,7 @@ from movieeffect import movieeffect
 from deletefiles import deletefiles
 from videofix import videofix
 from img2mp4 import img2mp4
+from vertical2H import vertical2H
 
 vlist=[]
 vlistedit=[]
@@ -30,6 +31,12 @@ slow=""
 cwd = os.getcwd()
 os.system("cd "+cwd)
 print("working direcory :"+cwd)
+
+#vertical image and pad
+
+vertical2H=vertical2H()
+vertical2H.getvimg()
+vertical2H.v2h()
 
 #img to mp4 converter
 img2mp4=img2mp4()

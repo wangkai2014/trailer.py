@@ -5,7 +5,7 @@ import subprocess
 class img2mp4:
     imglist=[]
     def getimg2mp4(self):
-        for imgs in glob.glob('*.JPG'):
+        for imgs in glob.glob('*JPG.JPG'):
             self.imglist.append(imgs)
         for imgs in glob.glob('*.PNG'):
             #self.imglist.append(imgs)

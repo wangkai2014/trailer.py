@@ -10,6 +10,9 @@ class deletefiles:
             vcount=vcount+1
             os.remove(str(vcount)+".mp4")
 
+        for jpg in glob.glob("*.jpg.jpg"):
+            os.remove(jpg)
+
         os.remove("concatenate.mp4")
         os.remove("audiogain.mp4")
         os.remove("addaudio.mp4")
