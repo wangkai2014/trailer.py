@@ -12,6 +12,8 @@ class deletefiles:
 
         for jpg in glob.glob("*.jpg.jpg"):
             os.remove(jpg)
+        for jpg in glob.glob("*.png.jpg"):
+            os.remove(jpg)
 
         os.remove("concatenate.mp4")
         os.remove("audiogain.mp4")
@@ -21,6 +23,5 @@ class deletefiles:
             os.remove("out."+i+".mp4")
         
         os.remove("filter.mp4")
-        os.remove("output.png")
         print("Delete all *.mp4 files")
         print("Deleted tmp files...")
