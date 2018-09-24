@@ -11,8 +11,7 @@ class vertical2H:
         for imgs in glob.glob('*.JPG'):
             self.vimg.append(imgs)
         for imgs in glob.glob('*.PNG'):
-            #self.vimg.append(imgs)
-            print("ignore png files")
+            self.vimg.append(imgs)
 
     def v2h(self):
 

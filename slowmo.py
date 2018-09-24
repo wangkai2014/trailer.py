@@ -7,7 +7,9 @@ from subclip import subclip
 
 class slowmo:
     def getslowmo(self,vlistedit):
-        slowmo = input("Slowmotion trailer(y/n) ? : ")
+        #slowmo = input("Slowmotion trailer(y/n) ? : ")
+        #slowmo = self.gui.slowmo
+        slowmo="y"
         if slowmo=="y" :
     	    for j in subclip.vlistedit:
                 print("Working on."+j)

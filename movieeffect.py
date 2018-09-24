@@ -3,7 +3,6 @@ import random
 import subprocess
 import os
 from pathlib import Path
-import urllib.request
 from getfileinfo import getfileinfo
 
 class movieeffect:
@@ -25,10 +24,12 @@ class movieeffect:
     
     def blackbar(self):
         # Movie black bar
-        vfilter = input("Get Movie black bar(y/n) ? : ")
+        #vfilter = input("Get Movie black bar(y/n) ? : ")
+        #vfilter = self.gui.MovieEffect
+        vfilter="y"
         if vfilter=="y" :
-            print("ffmpeg -i filter.mp4 -vf  drawbox=x=0:y=0:w=0:h=200:color=black:t=fill,drawbox=x=0:y=880:w=0:h=200:color=black:t=fill Movietrailer.mp4")
-            p = subprocess.Popen("ffmpeg -i filter.mp4 -vf  drawbox=x=0:y=0:w=0:h=200:color=black:t=fill,drawbox=x=0:y=880:w=0:h=200:color=black:t=fill Movietrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            print("ffmpeg -i filter.mp4 -vf  drawbox=x=0:y=0:w=0:h=140:color=black:t=fill,drawbox=x=0:y=940:w=0:h=200:color=black:t=fill Movietrailer.mp4")
+            p = subprocess.Popen("ffmpeg -i filter.mp4 -vf  drawbox=x=0:y=0:w=0:h=140:color=black:t=fill,drawbox=x=0:y=940:w=0:h=200:color=black:t=fill Movietrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             for line in p.stdout.readlines():
                 print(line),
         else:
