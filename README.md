@@ -7,4 +7,4 @@ Keep all your videos and song in one folder and run below command
 
 ### python trailer.py
 
-Edited video with trailer.py : [https://youtu.be/2wZGRh_T41o](https://youtu.be/2wZGRh_T41o)
+Edited video with trailer.py : [https://www.youtube.com/watch?v=rZ8aR9haeww](https://www.youtube.com/watch?v=rZ8aR9haeww)
