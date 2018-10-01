@@ -19,11 +19,11 @@ class subclip:
             list1 ="-i "
             self.vlist2 = self.vlist2+list1+str(vcount)+".mp4 "
             print("vduration = ",self.getfileinfo.vduration)
-            if self.getfileinfo.vduration >=4 :
-                randomstart=random.randrange(self.getfileinfo.vduration-3)
-                randomlen=(random.choice([2,3,4]))
+            if self.getfileinfo.vduration >=3 :
+                randomstart=random.randrange(self.getfileinfo.vduration-random.choice([2,3]))
+                randomlen=(random.uniform(1, 3))
             else :
-                randomstart=0
+                randomstart=(random.uniform(0, 0.5))
                 randomlen=self.getfileinfo.vduration
 
             print("ffmpeg -i \""+i+"\" -ss "+str(randomstart)+" -t "+str(randomlen)+" -async 1 "+str(vcount)+".mp4")
