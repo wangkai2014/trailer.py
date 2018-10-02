@@ -11,7 +11,7 @@ class subclip:
     def getsubclip(self,vlist):
         vcount=0
         for i in vlist:
-            print("Output vidoes : ",i)
+            print("Working on video : ",i)
             self.getfileinfo.getvideoinfo(i)
             vcount=vcount+1
             self.vlistedit.append(str(vcount)+".mp4")
@@ -19,12 +19,14 @@ class subclip:
             list1 ="-i "
             self.vlist2 = self.vlist2+list1+str(vcount)+".mp4 "
             print("vduration = ",self.getfileinfo.vduration)
-            if self.getfileinfo.vduration >=3 :
-                randomstart=random.randrange(self.getfileinfo.vduration-random.choice([2,3]))
-                randomlen=(random.uniform(1, 3))
+            vduration=self.getfileinfo.vduration
+
+            if vduration >=3 :
+                randomstart=random.uniform(0, (vduration-random.uniform(2, 3)))
+                randomlen=(random.uniform(2, 3))
             else :
-                randomstart=(random.uniform(0, 0.5))
-                randomlen=self.getfileinfo.vduration
+                randomstart=(random.uniform(0.1, 0.2))
+                randomlen=(vduration-0.3)   # -0.3 to remove same end frame
 
             print("ffmpeg -i \""+i+"\" -ss "+str(randomstart)+" -t "+str(randomlen)+" -async 1 "+str(vcount)+".mp4")
             p = subprocess.Popen("ffmpeg -i \""+i+"\" -ss "+str(randomstart)+" -t "+str(randomlen)+" -async 1 "+str(vcount)+".mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

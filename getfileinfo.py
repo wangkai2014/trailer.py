@@ -30,4 +30,4 @@ class getfileinfo:
         if len(ffprobeOutput['streams'])==2:
             self.audiostatus = ffprobeOutput['streams'][1]['codec_type']
         fduration = ffprobeOutput['streams'][0]['duration']
-        self.vduration = int(float(fduration))
+        self.vduration = float(fduration)

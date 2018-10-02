@@ -1,7 +1,7 @@
 # trailer.py
 Make short movie trailer using ffmpeg and python
 
-### Prerequisite : ffmpeg, python 3.x.x
+### Prerequisite : ffmpeg, ffprobe, python 3.x.x
 
 Keep all your videos and song in one folder and run below command
 

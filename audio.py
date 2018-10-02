@@ -11,7 +11,7 @@ class audio:
         #audio gain -15db
         print("ffmpeg -i concatenate.mp4 -vcodec copy -af \"volume=-15dB\" audiogain.mp4")
 
-        p = subprocess.Popen("ffmpeg -i concatenate.mp4 -vcodec copy -af \"volume=-12dB\" audiogain.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        p = subprocess.Popen("ffmpeg -i concatenate.mp4 -vcodec copy -af \"volume=-15dB\" audiogain.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         for line in p.stdout.readlines():
 	        print(line),
 
