@@ -8,9 +8,9 @@ class vertical2H:
     getfileinfo=getfileinfo()
     videohw=""
     def getvimg(self):
-        for imgs in glob.glob('*.JPG'):
+        for imgs in glob.glob('*.jpg'):
             self.vimg.append(imgs)
-        for imgs in glob.glob('*.PNG'):
+        for imgs in glob.glob('*.png'):
             self.vimg.append(imgs)
 
     def v2h(self):

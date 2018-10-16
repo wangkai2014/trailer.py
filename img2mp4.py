@@ -5,11 +5,11 @@ import subprocess
 class img2mp4:
     imglist=[]
     def getimg2mp4(self):
-        for imgs in glob.glob('*JPG.JPG'):
+        for imgs in glob.glob('*jpg.jpg'):
             self.imglist.append(imgs)
-        for imgs in glob.glob('*.PNG.JPG'):
+        for imgs in glob.glob('*.png.jpg'):
             self.imglist.append(imgs)
-        for imgs in glob.glob('*.JPEG.JPG'):
+        for imgs in glob.glob('*.jpeg.jpg'):
             self.imglist.append(imgs)
 
         #convert imgs to random sec mp4
