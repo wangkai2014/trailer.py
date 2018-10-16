@@ -30,6 +30,7 @@ class movieeffect:
         if vfilter=="y" :
             print("ffmpeg -i filter.mp4 -vf  drawbox=x=0:y=0:w=0:h=140:color=black:t=fill,drawbox=x=0:y=940:w=0:h=200:color=black:t=fill Movietrailer.mp4")
             p = subprocess.Popen("ffmpeg -i filter.mp4 -vf  drawbox=x=0:y=0:w=0:h=140:color=black:t=fill,drawbox=x=0:y=940:w=0:h=200:color=black:t=fill Movietrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            #p = subprocess.Popen("ffmpeg -i filter.mp4 -vf  drawbox=x=0:y=0:w=0:h=140:color=black:t=max,drawbox=x=0:y=940:w=0:h=200:color=black:t=max Movietrailer.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)  for linux with older ffmpeg
             for line in p.stdout.readlines():
                 print(line),
         else:
