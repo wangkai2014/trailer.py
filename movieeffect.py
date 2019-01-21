@@ -14,9 +14,9 @@ class movieeffect:
         #vfilter = input("Apply video filter(y/n) ? : ")
         if vfilter=="y" :
 
-            print("ffmpeg -i fade.mp4 -vf eq=brightness=0.01:contrast=0.9:saturation=1.5 filter.mp4")
+            print("ffmpeg -i fade.mp4 -vf eq=brightness=0.01:contrast=0.9:saturation=1.3 filter.mp4")
 
-            p = subprocess.Popen("ffmpeg -i fade.mp4 -vf eq=brightness=0.01:contrast=0.9:saturation=1.5 filter.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            p = subprocess.Popen("ffmpeg -i fade.mp4 -vf eq=brightness=0.01:contrast=0.9:saturation=1.3 filter.mp4", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             for line in p.stdout.readlines():
                 print(line),
         else:
